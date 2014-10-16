@@ -27,10 +27,13 @@ Supported Params:
   image=1     // list image
   video=1     // list video
   raw=1       // list raw
-  start=1
-  limit=100
+  start=1     // start from index=1
+  limit=100   // list only 100 file
   thumb=1     // return thumbnail
-  slot=0
+  slot=0      // when camera have two cards. use slot=1 to the other card slot
+
+Return Value Format:
+  IMAGE + "/n" + "IMAGE" + "/n" + ...
 
 Example:
 > http://10.98.32.1:8080/DCIM/
@@ -64,14 +67,15 @@ DSC_7755.JPG
 DSC_7754.JPG
 DSC_7753.JPG
 
-> http://10.98.32.1:8080/DCIM/102D7100/?raw=1
+> http://10.98.32.1:8080/DCIM/102D7100/?raw=1 // return only RAW file
 DSC_7691.NEF
 DSC_7690.NEF
 
-> http://10.98.32.1:8080/DCIM/102D7100/?raw=1&start=1&limit=3
+> http://10.98.32.1:8080/DCIM/102D7100/?raw=1&start=1&limit=3   // return 3 RAW files started from the 2nd file.
 DSC_7690.NEF
 DSC_7689.NEF
 DSC_7688.NEF
+
 ```
 
 ### /getconfig
@@ -82,7 +86,7 @@ Function:
   get one config of camera
 
 Supported Params:
-  name=config_name
+  name={exposurecompensation,shutterspeed,aperture,iso,whitebalance}
 
 Example:
 > http://10.98.32.1:8080/getconfig?name=exposurecompensation
@@ -92,9 +96,7 @@ Example:
 5|0|Shutter Speed|shutterspeed:1/15|1/8000,1/6400,1/5000,1/4000,1/3200,1/2500,1/2000,1/1600,1/1250,1/1000,1/800,1/640,1/500,1/400,1/320,1/250,1/200,1/160,1/125,1/100,1/80,1/60,1/50,1/40,1/30,1/25,1/20,1/15,1/13,1/10,1/8,1/6,1/5,1/4,1/3,10/25,1/2,10/16,10/13,1,13/10,16/10,2,25/10,3,4,5,6,8,10,13,15,20,25,30,65535/65533,65535/65534,65535/65535
 ```
 
-<br>
-<br>
-`/setconfig`<br>
+### /setconfig
 <a name="iface_setconfig"> </a>
 
 ```
@@ -119,9 +121,7 @@ OK
 
 ```
 
-<br>
-<br>
-`/af`<br>
+### /af
 <a name="iface_af"> </a>
 
 ```
@@ -136,17 +136,15 @@ Return Value:
   FAILED
 
 Example:
->http://10.98.32.1:8080/af
+>http://10.98.32.1:8080/af                    // do auto-focus
 OK
->http://10.98.32.1:8080/af?position=100,200
+>http://10.98.32.1:8080/af?position=100,200   // set the focus point
 OK
 
 ```
 
-<br>
-<br>
-`/to_videomode`<br>
-`/to_photomode`<br>
+### /to_videomode
+### /to_photomode
 <a name="iface_to_photomode"> </a>
 
 ```
@@ -167,9 +165,7 @@ OK
 OK
 ```
 
-<br>
-<br>
-`/info`<br>
+### /info
 <a name="iface_info"> </a>
 
 ```
@@ -186,10 +182,7 @@ Example:
 >0.10.8-6baa960|4b0|42a|Nikon Corporation|D800|V1.02|0|wf2|90466100000000000000000000000000
 ```
 
-
-<br>
-<br>
-`/capture`<br>
+### /capture
 <a name="iface_capture"> </a>
 
 ```
@@ -212,10 +205,7 @@ OK,/slot0/DCIM/116ND800/DSC_3018.JPG
 FAILED
 ```
 
-
-<br>
-<br>
-`/nk_nonaf_capture`<br>
+### /nk_nonaf_capture
 <a name="iface_nk_nonaf_capture"> </a>
 
 ```
