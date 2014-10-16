@@ -27,9 +27,10 @@ Supported Params:
   image=1     // list image
   video=1     // list video
   raw=1       // list raw
-  start=1     // start from index=1
+  start=1     // position
   limit=100   // list only 100 file
-  thumb=1     // return thumbnail
+              // eg.  start=10&limit=20  (list 20 files started from the 11th file)
+  thumb=1     // return thumbnail image
   slot=0      // when camera have two cards. use slot=1 to the other card slot
 
 Return Value Format:
@@ -86,7 +87,18 @@ Function:
   get one config of camera
 
 Supported Params:
-  name={exposurecompensation,shutterspeed,aperture,iso,whitebalance}
+  name={exposurecompensation,shutterspeed,aperture,iso,whitebalance,viewfinder}
+
+Return Data Format:
+
+  TYPE|READ_ONLY|LABEL|CONFIG_NAME:CURRENT_VALUE|OPTION_VALUE,OPTION_VALUE,OPTION_VALUE ...
+
+  TYPE:           2 - text, 3 - range, 4 - toggle, 5 - menu
+  READ_ONLY:      0 - readwrite, 1 - readonly
+  LABEL:          readable name
+  CONFIG_NAME:    name for setconfig.  // eg.  shutterspeed=1/500
+  CURRENT_VALUE:  current value
+  OPTION_VALUE:   option for setconfig
 
 Example:
 > http://10.98.32.1:8080/getconfig?name=exposurecompensation
@@ -129,7 +141,7 @@ Function:
   do auto-focus
 
 Supported Params:
-  position=1000,2000   // do af at posotion(1000,2000)
+  position=1000,2000   // set focus point at posotion(1000,2000)
 
 Return Value:
   OK
@@ -179,7 +191,7 @@ Supported Params:
 
 Example:
 >http://10.98.32.1:8080/info
->0.10.8-6baa960|4b0|42a|Nikon Corporation|D800|V1.02|0|wf2|90466100000000000000000000000000
+>0.10.8-6baa960|4b0|42a|Nikon Corporation|D800|V1.02|0||90466100000000000000000000000000
 ```
 
 ### /capture
