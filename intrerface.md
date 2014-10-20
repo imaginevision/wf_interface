@@ -3,15 +3,11 @@
 + [`/getconfig`](#iface_getconfig)
 + [`/setconfig`](#iface_setconfig)
 + [`/af`](#iface_af)
-+ [`/to_videomode`](#iface_to_photomode)
 + [`/to_photomode`](#iface_to_photomode)
 + [`/info`](#iface_info)
 + [`/capture`](#iface_capture)
 + [`/nk_nonaf_capture`](#iface_nk_nonaf_capture)
 + [`/preview`](#iface_preview)
-+ [`/bulb`](#iface_bulb)
-+ [`/contcap`](#iface_contcap)
-+ [`/nk_ctrl_mode`](#iface_nk_ctrl_mode)
 
 ####/DCIM/
 <a name="iface_list_directory"> </a>
@@ -77,6 +73,9 @@ DSC_7690.NEF
 DSC_7689.NEF
 DSC_7688.NEF
 
+Suggestion:
+- Prefer to use the start, limit parameters. As the list dir is a slow operation, they will save your time.
+
 ```
 
 ### /getconfig
@@ -87,7 +86,7 @@ Function:
   get one config of camera
 
 Supported Params:
-  name={exposurecompensation,shutterspeed,aperture,iso,whitebalance,viewfinder}
+  name={exposurecompensation,shutterspeed,aperture,iso,whitebalance,viewfinder,nk_ctrl_mode}
 
 Return Data Format:
 
@@ -116,7 +115,7 @@ Function:
   update camera status
 
 Supported Params:
-  config_name=value   // config_name is just like those in getconfig
+  config_name=value   // you can find the config_name in getconfig interface
 
 Return Value:
   OK
@@ -130,6 +129,10 @@ FAILED
 
 >http://10.98.32.1:8080/setconfig?shutterspeed=1
 OK
+
+You should get the optional value from the getconfig interface.
+[viewfinder] can be 0/1. Some of the parameters must be set in viewfinder=1
+[nk_ctrl_mode] can be 0/1. It set the Nikon camera to USB control only state.
 
 ```
 
@@ -155,13 +158,12 @@ OK
 
 ```
 
-### /to_videomode
 ### /to_photomode
 <a name="iface_to_photomode"> </a>
 
 ```
 Function:
-  switch to video/photo mode
+  switch to photo mode
 
 Supported Params:
   nil
@@ -171,8 +173,6 @@ Return Value:
   FAILED
 
 Example:
->http://10.98.32.1:8080/to_videomode
-OK
 >http://10.98.32.1:8080/to_photomode
 OK
 ```
@@ -237,4 +237,18 @@ OK,/slot0/DCIM/116ND800/DSC_3019.JPG
 
 >http://10.98.32.1:8080/nk_nonaf_capture
 FAILED
+```
+
+### /preview
+<a name="iface_preview"> </a>
+
+```
+Function:
+  Get the preview image from DSLR.
+
+Supported Params:
+  nil
+
+Return value:
+  JPEG data
 ```
