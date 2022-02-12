@@ -9,7 +9,7 @@
 + [`/nk_nonaf_capture`](#iface_nk_nonaf_capture)
 + [`/preview`](#iface_preview)
 
-####/DCIM/
+#### /DCIM/
 <a name="iface_list_directory"> </a>
 
 ```
